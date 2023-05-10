@@ -20,13 +20,11 @@ class UsersListView(generics.ListAPIView):
 @permission_classes([permissions.IsAuthenticated])
 def send_friend_request(request, to_user_id):
     if int(to_user_id) == request.user.id:
-        return Response({'detail': 'You cannot send a friend request to yourself.'},
-                        status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': 'You cannot send a friend request to yourself.'}, status=status.HTTP_400_BAD_REQUEST)
     try:
         to_user = User.objects.get(pk=int(to_user_id))
         if to_user.is_superuser:
-            return Response({'error': 'Нельзя отправлять заявки на добавление в друзья админу'},
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Нельзя отправлять заявки на добавление в друзья админу'}, status=status.HTTP_400_BAD_REQUEST)
         FriendRequest.objects.create(from_user=request.user, to_user=to_user)
     except User.DoesNotExist:
         return Response({'error': 'Пользователь не найден'}, status=status.HTTP_404_NOT_FOUND)
@@ -36,9 +34,7 @@ def send_friend_request(request, to_user_id):
         if friendship:
             return Response({'detail': 'You are already friends.'})
     except Friendship.DoesNotExist:
-        # Ищем входящий запрос от to_user_id к текущему пользователю
         incoming_request = FriendRequest.objects.filter(to_user=request.user, from_user=to_user).first()
-        # Ищем исходящий запрос от текущего пользователя к to_user_id
         outgoing_request = FriendRequest.objects.filter(to_user=to_user, from_user=request.user).first()
 
         if incoming_request and outgoing_request:
@@ -51,6 +47,7 @@ def send_friend_request(request, to_user_id):
 
 
 @api_view(['DELETE'])
+@permission_classes([permissions.IsAuthenticated])
 def remove_friend(request, user_id):
     try:
         user = request.user
@@ -65,7 +62,8 @@ def remove_friend(request, user_id):
     return Response({'success': 'User removed from friends list.'}, status=status.HTTP_200_OK)
 
 
-class FriendshipRequestListView(generics.ListAPIView):
+
+class FriendRequestListView(generics.ListAPIView):
     serializer_class = FriendRequestsSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -100,7 +98,7 @@ def accept_friend_request(request, from_user_id):
     to_user = User.objects.get(pk=int(from_user_id))
     Friendship.objects.create(from_user=request.user, to_user=to_user)
     friend_request.delete()
-    return Response({'success': 'Request was accepted.'}, status=200)
+    return Response({'success': 'Request was accepted.'}, status=status.HTTP_200_OK)
 
 @api_view(['DELETE'])
 @permission_classes([permissions.IsAuthenticated])
@@ -136,18 +134,23 @@ def get_friendship_status(request, user_id):
     if friend:
         return Response({'status': 'friends'})
     friend_request = FriendRequest.objects.filter(
-        Q(from_user=user, to_user=to_user) | Q(from_user=to_user, to_user=user))
-    if friend_request.from_user == user:
+        Q(from_user=user, to_user=to_user) | Q(from_user=to_user, to_user=user)).first()
+    if friend_request and friend_request.from_user == user:
         return Response({'status': 'outgoing request'})
-    elif friend_request.from_user == to_user:
+    elif friend_request and friend_request.from_user == to_user:
         return Response({'status': 'incoming request'})
     return Response({'status': 'not friends'})
 
 
-
 class FriendshipListViewSet(generics.ListAPIView):
-    serializer_class = FriendshipSerializer
+    serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        return Friendship.objects.filter((Q(to_user=self.request.user) | Q(from_user=self.request.user)))
+        friendships = Friendship.objects.filter((Q(to_user=self.request.user) | Q(from_user=self.request.user)))
+        results = []
+        for friendship in friendships:
+            user_id = friendship.from_user.id if friendship.from_user != self.request.user else friendship.to_user.id
+            username = friendship.from_user.username if friendship.from_user != self.request.user else friendship.to_user.username
+            results.append({'id': user_id, 'username': username})
+        return results

@@ -7,12 +7,6 @@ User = get_user_model()
 class FriendRequest(models.Model):
     from_user = models.ForeignKey(User, related_name='request_from_user', on_delete=models.CASCADE)
     to_user = models.ForeignKey(User, related_name='request_to_user', on_delete=models.CASCADE)
-    status_choices = (
-        (0, 'Pending'),
-        (1, 'Accepted'),
-        (2, 'Rejected')
-    )
-    status = models.IntegerField(choices=status_choices, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
