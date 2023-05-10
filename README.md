@@ -5,7 +5,7 @@
 ```
 git clone https://github.com/shkurtajadela/vk_friends.git
 python -m venv venv
-venv\Scripts\activate
+venv\Scripts\activate #windows .venv/bin/activate -not windows
 pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
