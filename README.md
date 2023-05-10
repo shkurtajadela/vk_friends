@@ -19,26 +19,29 @@ docker compose up
 **Сервис может:**
 - зарегистрировать нового пользователя: <b>http://127.0.0.1:8000/auth/register/</b> 
 Пример:
-![Registration](https://github.com/shkurtajadela/vk_friends/images/register.png)
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/register.png?raw=true" width="300"/>
 - отправить одному пользователю заявку в друзья другому <b>http://127.0.0.1:8000/api/send_request/{to_user_id}</b> Если пользователь 1 отправит заявку пользователю 2, а пользователь 2 отправляет заявку пользователю 1, то они автоматически становятся друзьями, их заявки автоматом принимаются. Пример:
-![Send Request Successful](https://github.com/shkurtajadela/vk_friends/images/send_suc.png)
-![Send Request](https://github.com/shkurtajadela/vk_friends/images/send_acc.png)
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/send_suc.png?raw=true" width="300"/>
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/send_acc.png?raw=true" width="300"/>
 - принять пользователю заявку в друзья от другого пользователя <b>http://127.0.0.1:8000/api/accept_request/{from_user_id}</b>
-![Accept](https://github.com/shkurtajadela/vk_friends/images/request_acc.png)
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/request_acc.png?raw=true" width="300"/>
 - отклонить пользователю заявку в друзья от другого пользователя <b>http://127.0.0.1:8000/api/reject_request/{from_user_id}</b>
-![Reject](https://github.com/shkurtajadela/vk_friends/images/request_rej.png)
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/request_rej.png?raw=true" width="300"/>
 - посмотреть пользователю список своих исходящих заявок в друзья <b>http://127.0.0.1:8000/api/outcoming_friend_requests</b>
-![Outcoming](https://github.com/shkurtajadela/vk_friends/images/outcoming.png)
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/outcoming.png?raw=true" width="300"/>
 - посмотреть пользователю список своих входящих заявок в друзья <b>http://127.0.0.1:8000/api/incoming_friend_requests</b>
-![Incoming](https://github.com/shkurtajadela/vk_friends/images/incoming.png)
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/incoming.png?raw=true" width="300"/>
 - получить пользователю статус дружбы с каким-то другим пользователя (нет ничего / есть исхоящая заявка / есть входящая заявка / уже друзья)<b>http://127.0.0.1:8000/api/get_status/{user_id}</b>
-![Status](https://github.com/shkurtajadela/vk_friends/images/status.png)
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/status.png?raw=true" width="300"/>
 - посмотреть пользователю список своих друзей <b>http://127.0.0.1:8000/api/my_friends</b>
-![Friends](https://github.com/shkurtajadela/vk_friends/images/friends.png)
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/friends.png?raw=true" width="300"/>
 - удалить пользователю другого пользователя из своих друзей <b>http://127.0.0.1:8000/api/delete_friend/{user_id}</b>
-![Delete friend](https://github.com/shkurtajadela/vk_friends/images/delete.png)
-![Friends after deleting](https://github.com/shkurtajadela/vk_friends/images/friends_after.png)
+
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/delete.png?raw=true" width="300"/>
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/friends_after.png?raw=true" width="300"/>
 - посмотреть список пользователей <b>http://127.0.0.1:8000/api/search_friends</b>
+
+<img src="https://github.com/shkurtajadela/vk_friends/blob/main/images/users.png?raw=true" width="300"/>
 
 
 **OpenAPI**
