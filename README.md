@@ -33,20 +33,24 @@ python manage.py tests friends
 - зарегистрировать нового пользователя: <b>http://127.0.0.1:8000/auth/register/</b> 
   
   <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/register.png?raw=true" width="300"/>
-- отправить одному пользователю заявку в друзья другому <b>http://127.0.0.1:8000/api/send_request/{to_user_id}</b>  Пример:
-  
+- отправить одному пользователю заявку в друзья другому <b>http://127.0.0.1:8000/api/send_request/{to_user_id}</b>  
+  Пример:
   <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/send_suc.png?raw=true" width="300"/>
   
   Если пользователь 1 отправит заявку пользователю 2, а пользователь 2 отправляет заявку пользователю 1, то они автоматически становятся друзьями, их заявки автоматом принимаются.
   
   <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/send_acc.png?raw=true" width="300"/>
 - принять пользователю заявку в друзья от другого пользователя <b>http://127.0.0.1:8000/api/accept_request/{from_user_id}</b>
+
   <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/request_acc.png?raw=true" width="300"/>
 - отклонить пользователю заявку в друзья от другого пользователя <b>http://127.0.0.1:8000/api/reject_request/{from_user_id}</b>
+
   <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/request_rej.png?raw=true" width="300"/>
 - посмотреть пользователю список своих исходящих заявок в друзья <b>http://127.0.0.1:8000/api/outcoming_friend_requests</b>
+
   <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/outcoming.png?raw=true" width="300"/>
 - посмотреть пользователю список своих входящих заявок в друзья <b>http://127.0.0.1:8000/api/incoming_friend_requests</b>
+
   <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/incoming.png?raw=true" width="300"/>
 - получить пользователю статус дружбы с каким-то другим пользователя (нет ничего / есть исхоящая заявка / есть входящая заявка / уже друзья)<b>http://127.0.0.1:8000/api/get_status/{user_id}</b>
   
