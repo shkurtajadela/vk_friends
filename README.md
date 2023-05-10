@@ -35,6 +35,7 @@ python manage.py tests friends
   <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/register.png?raw=true" width="300"/>
 - отправить одному пользователю заявку в друзья другому <b>http://127.0.0.1:8000/api/send_request/{to_user_id}</b>  
   Пример:
+  
   <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/send_suc.png?raw=true" width="300"/>
   
   Если пользователь 1 отправит заявку пользователю 2, а пользователь 2 отправляет заявку пользователю 1, то они автоматически становятся друзьями, их заявки автоматом принимаются.
