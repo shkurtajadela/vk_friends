@@ -1,0 +1,396 @@
+openapi: "3.0.0"
+info:
+  title: My Social Network API
+  description: RESTful API for managing friend requests and friendships
+  version: "1.0.0"
+paths:
+  /auth/login/:
+    post:
+      tags:
+        - Authentication
+      summary: Obtain an access token for a registered user
+      operationId: token_obtain_pair
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access:
+                    type: string
+                  refresh:
+                    type: string
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+
+  /auth/login/refresh/:
+    post:
+      tags:
+        - Authentication
+      summary: Refresh an access token
+      operationId: token_refresh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh:
+                  type: string
+              required:
+                - refresh
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access:
+                    type: string
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+
+  /auth/register/:
+    post:
+      tags:
+        - Authentication
+      summary: Register a new user
+      operationId: auth_register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      responses:
+        "201":
+          description: "Success"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+
+  /api/send_request/user_id:
+    post:
+      tags:
+        - Friend Requests
+      summary: Send a friend request to another user
+      operationId: send_friend_request
+      parameters:
+        - in: path
+        name: user_id
+        schema:
+          type: integer
+          required: true
+      responses:
+        "201":
+          description: "Success"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+
+  /api/friend_requests:
+    get:
+      tags:
+        - Friend Requests
+      summary: Get a list of sent friend requests
+      operationId: get_friend_requests
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    sender:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        username:
+                          type: string
+                    receiver:
+                      type: object
+                    id:
+                      type: integer
+                sender:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    username:
+                      type: string
+                receiver:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    username:
+                      type: string
+  /api/incoming_friend_requests:
+    get:
+      tags:
+        - Friend Requests
+      summary: Get a list of user's incoming friend requests
+      operationId: get_incoming_friend_requests
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    sender:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        username:
+                          type: string
+                    receiver:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        username:
+                          type: string
+
+  /api/outcoming_friend_requests:
+    get:
+      tags:
+      - Friend Requests
+      summary: Get a list of user's outgoing friend requests
+      operationId: get_outcoming_friend_requests
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      username:
+                        type: string
+                  receiver:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      username:
+                        type: string
+
+  /api/accept_request/{user_id}:
+    post:
+    tags:
+    - Friend Requests
+    summary: Accept a friend request from another user
+    operationId: accept_friend_request
+    parameters:
+      - in: path
+      name: user_id
+      schema:
+        type: integer
+        required: true
+    responses:
+      "200":
+        description: "Success"
+      "400":
+        description: "Bad Request"
+        content:
+          application/json:
+            schema:
+              type: object
+                properties:
+                  detail:
+                    type: string
+
+  /api/reject_request/{user_id}:
+    delete:
+      tags:
+      - Friend Requests
+      summary: Reject a friend request from another user
+      operationId: reject_friend_request
+      parameters:
+        - in: path
+        name: user_id
+        schema:
+          type: integer
+          required: true
+      responses:
+        "200":
+          description: "Success"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                  type: string
+
+  /api/my_friends:
+    get:
+      tags:
+        - Friends
+        summary: Get a list of user's friends
+        operationId: get_friends_list
+        responses:
+          "200":
+            description: "Success"
+              content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      username:
+                        type: string
+
+  /api/delete_friend/{user_id}:
+    delete:
+      tags:
+        - Friends
+        summary: Remove a friend from user's friend list
+        operationId: remove_friend
+        parameters:
+          - in: path
+          name: user_id
+          schema:
+            type: integer
+            required: true
+        responses:
+          "204":
+            description: "Success"
+
+  /api/search_friends:
+  get:
+    tags:
+      - Friends
+      summary: Search for friends by name or username
+      operationId: search_friends
+      parameters:
+        - in: query
+          name: query
+            schema:
+              type: string
+              required: true
+        - in: query
+          name: limit
+            schema:
+              type: integer
+              required: false
+        - in: query
+          name: offset
+            schema:
+              type: integer
+              required: false
+      responses:
+        "200":
+        description: "Success"
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+
+  /api/get_status/{user_id}:
+  get:
+    tags:
+    - Friends
+    summary: Get the friendship status with another user
+    operationId: get_friendship_status
+    parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: integer
+          required: true
+    responses:
+      "200":
+        description: "Success"
+          content:
+          application/json:
+            schema:
+              type: object
+            properties:
+              status:
+              type: string
+
