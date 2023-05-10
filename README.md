@@ -16,6 +16,19 @@ python manage.py runserver
 docker compose up
 ```
 
+**OpenAPI**
+
+Чтобы посмотреть документацию OpenAPI http://127.0.0.1:8000/docs/swagger/
+
+
+**Tests**
+
+Папки appauth (3 tests) и friends (21 tests) содержат тесты на регистрацию пользователя и на действия, связанные с отправкой, принятием, отклонением заявки и т.д. соответственно. Чтобы их запускать
+```
+python manage.py tests appauth
+python manage.py tests friends
+```
+
 **Сервис может:**
 - зарегистрировать нового пользователя: <b>http://127.0.0.1:8000/auth/register/</b> 
 Пример:
@@ -44,15 +57,4 @@ docker compose up
 <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/users.png?raw=true" width="450"/>
 
 
-**OpenAPI**
 
-Чтобы посмотреть документацию OpenAPI http://127.0.0.1:8000/docs/swagger/
-
-
-**Tests**
-
-Папки appauth (3 tests) и friends (21 tests) содержат тесты на регистрацию пользователя и на действия, связанные с отправкой, принятием, отклонением заявки и т.д. соответственно. Чтобы их запускать
-```
-python manage.py tests appauth
-python manage.py tests friends
-```
