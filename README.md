@@ -51,6 +51,7 @@ python manage.py tests friends
 - удалить пользователю другого пользователя из своих друзей <b>http://127.0.0.1:8000/api/delete_friend/{user_id}</b>
 
 <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/delete.png?raw=true" width="300"/>
+Вот и список друзей после удаления одного из них:
 <img src="https://github.com/shkurtajadela/vk_friends/blob/main/img/friends_after.png?raw=true" width="300"/>
 - посмотреть список пользователей <b>http://127.0.0.1:8000/api/search_friends</b>
 
