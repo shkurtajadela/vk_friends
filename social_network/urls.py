@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('appauth.urls')),
     path('api/', include('friends.urls')),
+    path('docs/', include('swagger.urls'))
 ]
