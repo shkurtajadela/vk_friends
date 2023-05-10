@@ -113,7 +113,7 @@ paths:
                   detail:
                     type: string
 
-  /api/send_request/user_id:
+  /api/send_request/to_user_id:
     post:
       tags:
         - Friend Requests
@@ -121,7 +121,7 @@ paths:
       operationId: send_friend_request
       parameters:
         - in: path
-        name: user_id
+        name: to_user_id
         schema:
           type: integer
           required: true
@@ -138,49 +138,6 @@ paths:
                   detail:
                     type: string
 
-  /api/friend_requests:
-    get:
-      tags:
-        - Friend Requests
-      summary: Get a list of sent friend requests
-      operationId: get_friend_requests
-      responses:
-        "200":
-          description: "Success"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    sender:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        username:
-                          type: string
-                    receiver:
-                      type: object
-                    id:
-                      type: integer
-                sender:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    username:
-                      type: string
-                receiver:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    username:
-                      type: string
   /api/incoming_friend_requests:
     get:
       tags:
@@ -247,7 +204,7 @@ paths:
                       username:
                         type: string
 
-  /api/accept_request/{user_id}:
+  /api/accept_request/{from_user_id}:
     post:
     tags:
     - Friend Requests
@@ -255,7 +212,7 @@ paths:
     operationId: accept_friend_request
     parameters:
       - in: path
-      name: user_id
+      name: from_user_id
       schema:
         type: integer
         required: true
@@ -272,7 +229,7 @@ paths:
                   detail:
                     type: string
 
-  /api/reject_request/{user_id}:
+  /api/reject_request/{from_user_id}:
     delete:
       tags:
       - Friend Requests
@@ -340,22 +297,6 @@ paths:
       - Friends
       summary: Search for friends by name or username
       operationId: search_friends
-      parameters:
-        - in: query
-          name: query
-            schema:
-              type: string
-              required: true
-        - in: query
-          name: limit
-            schema:
-              type: integer
-              required: false
-        - in: query
-          name: offset
-            schema:
-              type: integer
-              required: false
       responses:
         "200":
         description: "Success"

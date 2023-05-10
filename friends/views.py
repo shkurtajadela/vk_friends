@@ -62,29 +62,32 @@ def remove_friend(request, user_id):
     return Response({'success': 'User removed from friends list.'}, status=status.HTTP_200_OK)
 
 
-
-class FriendRequestListView(generics.ListAPIView):
-    serializer_class = FriendRequestsSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return FriendRequest.objects.filter(Q(from_user=self.request.user) | Q(to_user=self.request.user))
-
-
 class FriendshipIncomingRequestListView(generics.ListAPIView):
-    serializer_class = FriendRequestsSerializer
+    serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return FriendRequest.objects.filter(to_user=self.request.user)
+        requests = FriendRequest.objects.filter(Q(to_user=self.request.user))
+        results = []
+        for request in requests:
+            user_id = request.from_user.id
+            username = request.from_user.username
+            results.append({'id': user_id, 'username': username})
+        return results
 
 
 class FriendshipOutcomingRequestListView(generics.ListAPIView):
-    serializer_class = FriendRequestsSerializer
+    serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return FriendRequest.objects.filter(from_user=self.request.user)
+        requests = FriendRequest.objects.filter(Q(from_user=self.request.user))
+        results = []
+        for request in requests:
+            user_id = request.to_user.id
+            username = request.to_user.username
+            results.append({'id': user_id, 'username': username})
+        return results
 
 
 @api_view(['POST'])
@@ -154,3 +157,4 @@ class FriendshipListViewSet(generics.ListAPIView):
             username = friendship.from_user.username if friendship.from_user != self.request.user else friendship.to_user.username
             results.append({'id': user_id, 'username': username})
         return results
+
