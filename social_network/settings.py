@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'friends',
     'drf_yasg',
-    'swagger',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -3,6 +3,28 @@ info:
   title: My Social Network API
   description: RESTful API for managing friend requests and friendships
   version: "1.0.0"
+components:
+  schemas:
+    FriendRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        to_user:
+          type: object
+        from_user:
+          type: object
+        created_at:
+          type: date
+    Friendship:
+      type: object
+      properties:
+        id:
+          type: integer
+        to_user:
+          type: object
+        from_user:
+          type: object
 paths:
   /auth/login/:
     post:
@@ -118,16 +140,25 @@ paths:
       tags:
         - Friend Requests
       summary: Send a friend request to another user
-      operationId: send_friend_request
+      operationId: send_request
       parameters:
         - in: path
         name: to_user_id
         schema:
           type: integer
           required: true
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FriendRequest'
       responses:
         "201":
           description: "Success"
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/FriendRequest'
         "400":
           description: "Bad Request"
           content:
@@ -257,7 +288,7 @@ paths:
   /api/my_friends:
     get:
       tags:
-        - Friends
+        - Friendships
         summary: Get a list of user's friends
         operationId: get_friends_list
         responses:
@@ -278,7 +309,7 @@ paths:
   /api/delete_friend/{user_id}:
     delete:
       tags:
-        - Friends
+        - Friendships
         summary: Remove a friend from user's friend list
         operationId: remove_friend
         parameters:
@@ -294,7 +325,7 @@ paths:
   /api/search_friends:
   get:
     tags:
-      - Friends
+      - Friendships
       summary: Search for friends by name or username
       operationId: search_friends
       responses:
